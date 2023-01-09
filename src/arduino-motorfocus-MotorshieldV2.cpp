@@ -16,7 +16,7 @@
 // *** Adjustments to use with Adafruit Motorshield V2
 #define BTN_IN 5 // was 7 Pin Number for in move button
 #define BTN_OUT 9 // was 8 Pin Number for out move button
-#define BTN_STEP 6 // was 32 Number of steps to move by button press
+#define BTN_STEP 64 // was 32 Number of steps to move by button press
 
 #define PIN_DRIVER_SLEEP 4 // TODO: wozu?
 #define PIN_DRIVER_DIR 3
@@ -58,10 +58,10 @@ AccelStepper stepper(AccelStepper::FULL4WIRE, 6, 4, 5, 3, false);
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
-// multiplier of SPEEDMUX, currently max speed is 480.
+// multiplier of SPEEDMUX, currently max speed is 840, was 480.
 int speedFactor = 16;
 int speedFactorRaw = 4;
-int speedMult = 30;
+int speedMult = 60; // was 30, maxSpeed = speedFactor*speedMult
 
 float t_coeff = 0;
 
@@ -96,7 +96,7 @@ void setup()
   // initalize motor
   debugSerial.println("init motor driver...");
   stepper.setMaxSpeed(speedFactor * speedMult);
-  stepper.setAcceleration(100);
+  stepper.setAcceleration(200); // was 100
 
 #ifdef USE_DRIVER
   // stepper.setEnablePin(PIN_DRIVER_SLEEP); // TODO: ?
